@@ -2,6 +2,8 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:300,600' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
     <meta charset="utf-8" />
     <title></title>
 </head>
@@ -11,11 +13,16 @@
         <button>Add Catalog</button>
     </a>
 </div>
-{% for catalog in catalogs %}
+<div id="catalogsdiv">
+    {% for catalog in catalogs %}
     <a href="{{url_for('showCatalog', cat_id = catalog.id)}}">
         {{catalog.name}}<br>
     </a>
-{% endfor %}
-
+    {% endfor %}
+</div>
+<div id="itemsforcatalogsdiv">
+    ABC<br />
+    ABC<br />
+</div>
 </body>
 </html>
