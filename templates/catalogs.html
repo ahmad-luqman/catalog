@@ -3,6 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:300,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
     <meta charset="utf-8" />
     <title></title>
@@ -13,16 +14,18 @@
         <button>Add Catalog</button>
     </a>
 </div>
-<div id="catalogsdiv">
-    {% for catalog in catalogs %}
-    <a href="{{url_for('showCatalog', cat_id = catalog.id)}}">
-        {{catalog.name}}<br>
-    </a>
-    {% endfor %}
-</div>
-<div id="itemsforcatalogsdiv">
-    ABC<br />
-    ABC<br />
+<div id="contentdiv">
+    <div id="catalogsdiv">
+        {% for catalog in catalogs %}
+        <a href="{{url_for('showCatalog', cat_id = catalog.id)}}">
+            {{catalog.name}}<br>
+        </a>
+        {% endfor %}
+    </div>
+    <div id="itemsforcatalogsdiv">
+        ABC<br />
+        ABC<br />
+    </div>
 </div>
 </body>
 </html>
