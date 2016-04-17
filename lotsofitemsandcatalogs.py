@@ -22,10 +22,6 @@ catalog1 = Catalog(name="Soccer")
 session.add(catalog1)
 session.commit()
 
-item1 = Item(title="Jersey", description="Jersey Description", catalog=catalog1)
-session.add(item1)
-session.commit()
-
 catalog2 = Catalog(name="Basketball")
 
 session.add(catalog2)
@@ -67,5 +63,40 @@ catalog9 = Catalog(name="Hockey")
 session.add(catalog9)
 session.commit()
 
+item1 = Item(title="Soccer Cleats", description="", catalog=catalog1)
+session.add(item1)
+session.commit()
+
+item2 = Item(title="Jersey", description="Jersey Description", catalog=catalog1)
+session.add(item2)
+session.commit()
+
+item3 = Item(title="Bat", description="", catalog=catalog3)
+session.add(item3)
+session.commit()
+
+item4 = Item(title="Frisbee", description="", catalog=catalog4)
+session.add(item4)
+session.commit()
+
+item5 = Item(title="Shinguards", description="", catalog=catalog1)
+session.add(item5)
+session.commit()
+
+item6 = Item(title="Two Shinguards", description="", catalog=catalog1)
+session.add(item6)
+session.commit()
+
+item7 = Item(title="Snowboard", description="", catalog=catalog5)
+session.add(item7)
+session.commit()
+
+item8 = Item(title="Goggles", description="", catalog=catalog5)
+session.add(item8)
+session.commit()
+
+item1 = Item(title="Hockey", description="", catalog=catalog9)
+session.add(item1)
+session.commit()
 
 print "added catalog items!"

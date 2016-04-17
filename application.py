@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect,jsonify, url_for, flash
 app = Flask(__name__)
 
-from sqlalchemy import create_engine, asc
+from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Catalog, Item
 
@@ -18,7 +18,8 @@ session = DBSession()
 @app.route('/catalog/')
 def showCatalogs():
     catalogs = session.query(Catalog).order_by(asc(Catalog.name))
-    return render_template('catalogs.html', catalogs = catalogs)
+    items = session.query(Item).order_by(desc(Item.inserted)).all()
+    return render_template('catalogs.html', catalogs = catalogs, items = items)
 
 #Show a catalog
 @app.route('/catalog/<int:cat_id>/')

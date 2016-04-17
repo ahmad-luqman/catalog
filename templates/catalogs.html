@@ -23,8 +23,9 @@
         {% endfor %}
     </div>
     <div id="itemsforcatalogsdiv">
-        ABC<br />
-        ABC<br />
+        {% for item in items %}
+        {{item.title}} ({{item.cat_id}})<br>
+        {% endfor %}
     </div>
 </div>
 </body>
