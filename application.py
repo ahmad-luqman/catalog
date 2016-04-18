@@ -18,8 +18,9 @@ session = DBSession()
 @app.route('/catalog/')
 def showCatalogs():
     catalogs = session.query(Catalog).order_by(asc(Catalog.name))
-    items = session.query(Item).order_by(desc(Item.inserted)).all()
-    return render_template('catalogs.html', catalogs = catalogs, items = items)
+    #items = session.query(Item).order_by(desc(Item.inserted)).all()
+    items_with_catalog = session.query(Item,Catalog).join(Catalog).order_by(desc(Item.inserted)).limit(9).all()
+    return render_template('catalogs.html', catalogs = catalogs, items_with_catalog = items_with_catalog)
 
 #Show a catalog
 @app.route('/catalog/<int:cat_id>/')
@@ -28,6 +29,8 @@ def showCatalog(cat_id):
     catalog = session.query(Catalog).filter_by(id=cat_id).one()
     items = session.query(Item).filter_by(cat_id = cat_id).all()
     return render_template('items.html', items = items, catalog = catalog)
+
+
 
 @app.route('/catalog/new/', methods=['GET','POST'])
 def newCatalog():
