@@ -23,14 +23,12 @@ def showCatalogs():
     return render_template('catalogs.html', catalogs = catalogs, items_with_catalog = items_with_catalog)
 
 #Show a catalog
-@app.route('/catalog/<int:cat_id>/')
-@app.route('/catalog/<int:cat_id>/item/')
-def showCatalog(cat_id):
-    catalog = session.query(Catalog).filter_by(id=cat_id).one()
-    items = session.query(Item).filter_by(cat_id = cat_id).all()
-    return render_template('items.html', items = items, catalog = catalog)
-
-
+@app.route('/catalog/<string:cat_name>/items/')
+def showCatalog(cat_name):
+    catalogs = session.query(Catalog).order_by(asc(Catalog.name))
+    catalog = session.query(Catalog).filter_by(name=cat_name).one()
+    items = session.query(Item).filter_by(cat_id = catalog.id).all()
+    return render_template('items.html', items = items, catalogs = catalogs, catalog = catalog)  
 
 @app.route('/catalog/new/', methods=['GET','POST'])
 def newCatalog():

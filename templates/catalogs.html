@@ -17,7 +17,7 @@
 <div id="contentdiv">
     <div id="catalogsdiv">
         {% for catalog in catalogs %}
-        <a href="{{url_for('showCatalog', cat_id = catalog.id)}}">
+        <a href="{{url_for('showCatalog', cat_name = catalog.name)}}">
             {{catalog.name}}<br>
         </a>
         {% endfor %}
