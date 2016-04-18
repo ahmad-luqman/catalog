@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:300,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="contentdiv">
+        <div id="catalogsdiv">
+            <h3>{{item.title}}</h3>
+            {{item.description}}<br>
+        </div>
+    </div>
+</body>
+</html>

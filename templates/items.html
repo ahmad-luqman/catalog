@@ -26,7 +26,9 @@
         <div id="itemsforcatalogsdiv">
             <h3>{{catalog.name}} Items ({{count}} items)</h3>
             {% for item in items %}
-            {{item.title}}<br>
+            <a href="{{url_for('showItem', cat_name = catalog.name, item_name = item.title)}}">
+                {{item.title}}<br>
+            </a>
             {% endfor %}
         </div>
     </div>

@@ -39,6 +39,7 @@
     <Content Include="templates\catalogs.html" />
     <Content Include="templates\deleteCatalog.html" />
     <Content Include="templates\editCatalog.html" />
+    <Content Include="templates\itemdetails.html" />
     <Content Include="templates\items.html" />
     <Content Include="templates\newCatalog.html" />
   </ItemGroup>
