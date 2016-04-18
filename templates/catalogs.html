@@ -16,6 +16,7 @@
 </div>
 <div id="contentdiv">
     <div id="catalogsdiv">
+        <h3>Categories</h3>
         {% for catalog in catalogs %}
         <a href="{{url_for('showCatalog', cat_name = catalog.name)}}">
             {{catalog.name}}<br>
@@ -23,6 +24,7 @@
         {% endfor %}
     </div>
     <div id="itemsforcatalogsdiv">
+        <h3>Latest Items</h3>
         {% for item_with_catalog in items_with_catalog %}
         {{item_with_catalog.Item.title}} ({{item_with_catalog.Catalog.name}})<br>
         {% endfor %}
