@@ -4,33 +4,19 @@
     font-family: 'Roboto', sans-serif;
 }
 
-#contentdiv
-{
-    position:absolute;
-    
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 700px;
-    height: 800px;
+.row {
+  display: table;
+}
+
+.col {
+  display: table-cell;
+  width: 50%; /* depends on the number of columns */
+
+  padding: 1em;
+  border: solid;
+}
+
+.center {
+    position:relative;
     margin: auto;
-}
-
-#catalogsdiv
-{
-    position:relative;
-    float:left;
-    width: 300px;
-    border: 3px solid #73AD21;
-    padding: 10px;
-}
-
-#itemsforcatalogsdiv
-{
-    position:relative;
-    float:left;
-    width: 300px;
-    border: 3px solid #73AD21;
-    padding: 10px;
 }
