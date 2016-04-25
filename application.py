@@ -117,6 +117,45 @@ def gconnect():
     print "done!"
     return output
 
+@app.route('/gdisconnect')
+def gdisconnect():
+    #access_token = login_session['access_token']
+    access_token = login_session['access_token'] if 'access_token' in login_session else login_session.get('credentials').access_token
+    #access_token = credentials.access_token
+    print 'In gdisconnect access token is %s', access_token
+    print 'User name is: ' 
+    print login_session['username']
+    if access_token is None:
+        print 'Access Token is None'
+        response = make_response(json.dumps('Current user not connected.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[0]
+    print 'result is '
+    print result
+    if result['status'] == '200':
+        if 'credentials' in login_session:
+            del login_session['credentials'] 
+        else:
+            del login_session['access_token']
+        del login_session['gplus_id']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        response = make_response(json.dumps('Successfully disconnected.'), 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+@app.route('/clearSession')
+def clearSession():
+    login_session.clear()
+    return "Session cleared"
 
 #Show all categories
 @app.route('/')
@@ -183,5 +222,5 @@ def addItem(cat_id):
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
-    #app.debug = True
+    app.debug = True
     app.run(host = '0.0.0.0', port = 5000)
