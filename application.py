@@ -227,14 +227,30 @@ def newItem(cat_id):
     else:
         return render_template('newItem.html')
 
-@app.route('/catalog/<string:cat_name>/<string:item_name>//edit', methods=['GET','POST'])
+@app.route('/catalog/<string:cat_name>/<string:item_name>/edit', methods=['GET','POST'])
 def editItem(cat_name, item_name):
-    return 'asdf'
+    cat_id = session.query(Catalog).filter_by(name=cat_name).one().id
+    editedItem = session.query(Item).filter_by(title=item_name).filter_by(cat_id=cat_id).one()
+    if request.method == 'POST':
+        catalog = session.query(Catalog).filter_by(id=cat_id).one()
+        editedItem.title = request.form['name']
+        editedItem.description = request.form['description']
+        session.add(editedItem)
+        session.commit()
+        return redirect('/catalog/%s/items/' % catalog.name)
+    else:
+        return render_template('editItem.html', item = editedItem)
 
-
-@app.route('/catalog/<string:cat_name>/<string:item_name>//delete', methods=['GET','POST'])
+@app.route('/catalog/<string:cat_name>/<string:item_name>/delete', methods=['GET','POST'])
 def deleteItem(cat_name, item_name):
-    return 'asdf'
+    cat_id = session.query(Catalog).filter_by(name=cat_name).one().id
+    itemToDelete = session.query(Item).filter_by(title=item_name).filter_by(cat_id=cat_id).one()
+    if request.method == 'POST':
+        session.delete(itemToDelete)
+        session.commit()
+        return redirect('/catalog/%s/items/' % cat_name)
+    else:
+        return render_template('deleteItem.html', item = itemToDelete, cat_name = cat_name)
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'

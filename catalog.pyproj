@@ -39,7 +39,9 @@
     <Content Include="static\styles.css" />
     <Content Include="templates\catalogs.html" />
     <Content Include="templates\deleteCatalog.html" />
+    <Content Include="templates\deleteItem.html" />
     <Content Include="templates\editCatalog.html" />
+    <Content Include="templates\editItem.html" />
     <Content Include="templates\itemdetails.html" />
     <Content Include="templates\items.html" />
     <Content Include="templates\login.html" />
