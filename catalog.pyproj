@@ -35,6 +35,7 @@
     <Folder Include="templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="client_secrets.json" />
     <Content Include="static\styles.css" />
     <Content Include="templates\catalogs.html" />
     <Content Include="templates\deleteCatalog.html" />
