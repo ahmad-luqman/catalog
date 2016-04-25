@@ -44,6 +44,7 @@
     <Content Include="templates\items.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\newCatalog.html" />
+    <Content Include="templates\newItem.html" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

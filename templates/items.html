@@ -13,6 +13,9 @@
         <a href="{{url_for('newCatalog')}}">
             <button>Add Catalog</button>
         </a>
+        <a href="{{url_for('newItem', cat_id = catalog.id)}}">
+            <button>Add Item</button>
+        </a>
     </div>
     <div class="row center">
         <div class="col">
