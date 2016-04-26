@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
  
-from database_setup import Catalog, Item, Base
+from database_setup import Catalog, Item, User, Base
 engine = create_engine('sqlite:///catalogitemwithuser.db')
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DBSession instance
@@ -17,85 +17,91 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
-catalog1 = Catalog(name="Soccer")
+# Create dummy user
+User1 = User(name="Ahmad Luqman", email="ahmad.luqman@gmail.com",
+             picture='https://pbs.twimg.com/profile_images/2671170543/18debd694829ed78203a5a36dd364160_400x400.png')
+session.add(User1)
+session.commit()
+
+catalog1 = Catalog(user_id=1, name="Soccer")
 
 session.add(catalog1)
 session.commit()
 
-catalog2 = Catalog(name="Basketball")
+catalog2 = Catalog(user_id=1, name="Basketball")
 
 session.add(catalog2)
 session.commit()
 
-catalog3 = Catalog(name="Baseball")
+catalog3 = Catalog(user_id=1, name="Baseball")
 
 session.add(catalog3)
 session.commit()
 
-catalog4 = Catalog(name="Frisee")
+catalog4 = Catalog(user_id=1, name="Frisee")
 
 session.add(catalog4)
 session.commit()
 
-catalog5 = Catalog(name="Snowboarding")
+catalog5 = Catalog(user_id=1, name="Snowboarding")
 
 session.add(catalog5)
 session.commit()
 
-catalog6 = Catalog(name="Rock Climbing")
+catalog6 = Catalog(user_id=1, name="Rock Climbing")
 
 session.add(catalog6)
 session.commit()
 
-catalog7 = Catalog(name="Foosball")
+catalog7 = Catalog(user_id=1, name="Foosball")
 
 session.add(catalog7)
 session.commit()
 
 
-catalog8 = Catalog(name="Skating")
+catalog8 = Catalog(user_id=1, name="Skating")
 
 session.add(catalog8)
 session.commit()
 
-catalog9 = Catalog(name="Hockey")
+catalog9 = Catalog(user_id=1, name="Hockey")
 
 session.add(catalog9)
 session.commit()
 
-item1 = Item(title="Soccer Cleats", description="", catalog=catalog1)
+item1 = Item(user_id=1, title="Soccer Cleats", description="", catalog=catalog1)
 session.add(item1)
 session.commit()
 
-item2 = Item(title="Jersey", description="Jersey Description", catalog=catalog1)
+item2 = Item(user_id=1, title="Jersey", description="Jersey Description", catalog=catalog1)
 session.add(item2)
 session.commit()
 
-item3 = Item(title="Bat", description="", catalog=catalog3)
+item3 = Item(user_id=1, title="Bat", description="", catalog=catalog3)
 session.add(item3)
 session.commit()
 
-item4 = Item(title="Frisbee", description="", catalog=catalog4)
+item4 = Item(user_id=1, title="Frisbee", description="", catalog=catalog4)
 session.add(item4)
 session.commit()
 
-item5 = Item(title="Shinguards", description="", catalog=catalog1)
+item5 = Item(user_id=1, title="Shinguards", description="", catalog=catalog1)
 session.add(item5)
 session.commit()
 
-item6 = Item(title="Two Shinguards", description="", catalog=catalog1)
+item6 = Item(user_id=1, title="Two Shinguards", description="", catalog=catalog1)
 session.add(item6)
 session.commit()
 
-item7 = Item(title="Snowboard", description="", catalog=catalog5)
+item7 = Item(user_id=1, title="Snowboard", description="", catalog=catalog5)
 session.add(item7)
 session.commit()
 
-item8 = Item(title="Goggles", description="", catalog=catalog5)
+item8 = Item(user_id=1, title="Goggles", description="", catalog=catalog5)
 session.add(item8)
 session.commit()
 
-item1 = Item(title="Hockey", description="", catalog=catalog9)
+item1 = Item(user_id=1, title="Hockey", description="", catalog=catalog9)
 session.add(item1)
 session.commit()
 
