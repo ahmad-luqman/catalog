@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Catalog, Item
+from database_setup import Base, Catalog, Item, User
 
 from flask import session as login_session
 import random, string
@@ -106,6 +106,12 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    #see if user exists, if it doesn't make a new one
+    user_id = getUserID(login_session['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -157,6 +163,28 @@ def clearSession():
     login_session.clear()
     return "Session cleared"
 
+# User Helper Functions
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email'], picture=login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
+
 #Show all categories
 @app.route('/')
 @app.route('/catalog/')
@@ -180,7 +208,11 @@ def showCatalog(cat_name):
 def showItem(cat_name, item_name):
     catalog = session.query(Catalog).filter_by(name=cat_name).one()
     item = session.query(Item).filter_by(cat_id = catalog.id).filter_by(title = item_name).one()
-    return render_template('itemdetails.html', catalog = catalog, item = item)
+    creator = getUserInfo(item.user_id)
+    if 'username' not in login_session or creator.id != login_session['user_id']:
+        return render_template('publicitemdetails.html', catalog = catalog, item = item, creator = creator)
+    else:
+        return render_template('itemdetails.html', catalog = catalog, item = item)
 
 @app.route('/catalog/new/', methods=['GET','POST'])
 def newCatalog():
@@ -219,7 +251,8 @@ def deleteCatalog(cat_id):
 def newItem(cat_id):
     if request.method == 'POST':
         catalog = session.query(Catalog).filter_by(id=cat_id).one()
-        newItem = Item(title = request.form['name'], description = request.form['description'], cat_id = cat_id)
+        newItem = Item(title = request.form['name'], description = request.form['description'],
+                       cat_id = cat_id, user_id = login_session['user_id'])
         session.add(newItem)
         flash('')
         session.commit()

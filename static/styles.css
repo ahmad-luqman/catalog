@@ -20,3 +20,10 @@
     position:relative;
     margin: auto;
 }
+
+.creatorimg {
+    height: auto; 
+    width: auto; 
+    max-width: 48px; 
+    max-height: 48px;
+}
