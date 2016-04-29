@@ -212,7 +212,7 @@ def showItem(cat_name, item_name):
     if 'username' not in login_session or creator.id != login_session['user_id']:
         return render_template('publicitemdetails.html', catalog = catalog, item = item, creator = creator)
     else:
-        return render_template('itemdetails.html', catalog = catalog, item = item)
+        return render_template('itemdetails.html', catalog = catalog, item = item, creator = creator)
 
 @app.route('/catalog/new/', methods=['GET','POST'])
 def newCatalog():
@@ -264,6 +264,11 @@ def newItem(cat_id):
 def editItem(cat_name, item_name):
     cat_id = session.query(Catalog).filter_by(name=cat_name).one().id
     editedItem = session.query(Item).filter_by(title=item_name).filter_by(cat_id=cat_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if editedItem.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item. \
+                 Please create your own item in order to edit.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         catalog = session.query(Catalog).filter_by(id=cat_id).one()
         editedItem.title = request.form['name']
@@ -278,6 +283,11 @@ def editItem(cat_name, item_name):
 def deleteItem(cat_name, item_name):
     cat_id = session.query(Catalog).filter_by(name=cat_name).one().id
     itemToDelete = session.query(Item).filter_by(title=item_name).filter_by(cat_id=cat_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if itemToDelete.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to delete this item. \
+                 Please create your own item in order to delete.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
