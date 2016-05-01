@@ -193,6 +193,12 @@ def showCatalogs():
     items_with_catalog = session.query(Item,Catalog).join(Catalog).order_by(desc(Item.inserted)).limit(9).all()
     return render_template('catalogs.html', catalogs = catalogs, items_with_catalog = items_with_catalog)
 
+@app.route('/catalog/JSON')
+def showCatalogsJSON():
+    catalogs = session.query(Catalog).order_by(asc(Catalog.name)).all()
+    items = session.query(Item).order_by(desc(Item.inserted)).limit(9).all()
+    return jsonify(Catalogs = [c.serialize for c in catalogs], Items = [i.serialize for i in items])
+
 #Show a catalog
 @app.route('/catalog/<string:cat_name>/items/')
 def showCatalog(cat_name):
@@ -202,6 +208,13 @@ def showCatalog(cat_name):
     items = items_query.all()
     count = items_query.count()
     return render_template('items.html', items = items, catalogs = catalogs, catalog = catalog, count = count)
+
+#JSON APIs to view a catalog
+@app.route('/catalog/<string:cat_name>/items/JSON')
+def showCatalogJSON(cat_name):
+    catalog = session.query(Catalog).filter_by(name=cat_name).one()
+    items = session.query(Item).filter_by(cat_id = catalog.id).all()
+    return jsonify(Catalog = catalog.serialize, Items = [i.serialize for i in items])
 
 #Show a catalog
 @app.route('/catalog/<string:cat_name>/<string:item_name>/')
@@ -213,6 +226,13 @@ def showItem(cat_name, item_name):
         return render_template('publicitemdetails.html', catalog = catalog, item = item, creator = creator)
     else:
         return render_template('itemdetails.html', catalog = catalog, item = item, creator = creator)
+
+#Show a catalog
+@app.route('/catalog/<string:cat_name>/<string:item_name>/JSON')
+def showItemJSON(cat_name, item_name):
+    catalog = session.query(Catalog).filter_by(name=cat_name).one()
+    item = session.query(Item).filter_by(cat_id = catalog.id).filter_by(title = item_name).one()
+    return jsonify(Item = item.serialize)
 
 @app.route('/catalog/new/', methods=['GET','POST'])
 def newCatalog():

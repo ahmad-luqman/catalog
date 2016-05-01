@@ -50,7 +50,7 @@ class Item(Base):
     def serialize(self):
        """Return object data in easily serializeable format"""
        return {
-           'name'         : self.title,
+           'title'         : self.title,
            'description'  : self.description,
            'id'           : self.id,
        }
